@@ -24,8 +24,8 @@ public class Main {
         String url;
 
 	    try {
-	        //url = args[0];
-           url = "http://www.cnn.com/2013/06/10/politics/edward-snowden-profile/";
+	        url = args[0];
+           //url = "http://www.cnn.com/2013/06/10/politics/edward-snowden-profile/";
            // url = "http://www.marketwatch.com/story/fed-might-start-balance-sheet-drawdown-in-september-fomc-minutes-hint-2017-07-05";
 
             if (!testURL(url))
@@ -83,7 +83,7 @@ public class Main {
             allContent.add(s);
         }
         allContent = trimTagContent(allContent);
-        System.out.println(allContent);
+       // System.out.println(allContent);
 
         Map<String,Integer> allWords = determineCommonWords(doc);
         Set<String> keys = allWords.keySet();
@@ -101,7 +101,7 @@ public class Main {
                 newAdditions.add(s.replace("_"," "));
             }
         }
-        System.out.println(newAdditions);
+       // System.out.println(newAdditions);
 
         newAdditions.addAll(allContent);
         return newAdditions;
