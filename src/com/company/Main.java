@@ -1,3 +1,8 @@
+/**
+ * Webpage Content Analyzer
+ * By Andrew Braunlich
+ * July 6th, 2017
+ */
 package com.company;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -286,7 +291,7 @@ public class Main {
             System.exit(0);
         }
         if(!testURL(inp)){
-            askInput();
+           inp = askInput();
         }
 
         return inp;
