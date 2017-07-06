@@ -25,8 +25,8 @@ public class Main {
 
 	    try {
 	        //url = args[0];
-            //url = "http://blog.rei.com/camp/how-to-introduce-your-indoorsy-friend-to-the-outdoors/";
-            url = "http://www.cnn.com/2013/06/10/politics/edward-snowden-profile/";
+           url = "http://www.cnn.com/2013/06/10/politics/edward-snowden-profile/";
+           // url = "http://www.marketwatch.com/story/fed-might-start-balance-sheet-drawdown-in-september-fomc-minutes-hint-2017-07-05";
 
             if (!testURL(url))
             {
@@ -41,7 +41,7 @@ public class Main {
 
        Document doc = readPage(url);
        Set<String> keywords = assembleFinalList(doc);
-     //  printResults(keywords);
+       printResults(keywords);
 
     }
 
@@ -129,7 +129,7 @@ public class Main {
 
         Set<String> keyTagWords = new HashSet<String>();
         for (String s : temp){
-            if (!isBadWord(s)){
+            if (!isBadWord(s) && s.length()>=3){
                 keyTagWords.add(s);
             }
         }
@@ -143,23 +143,26 @@ public class Main {
      * @return the string without punctuation
      */
     private static String removePunctuation(String s){
-        s = s.replace(".","");
-        s = s.replace(",","");
-        s = s.replace(":","");
-        s = s.replace(";","");
-        s = s.replace("?","");
-        s = s.replace("!","");
-        s = s.replace("\"","");
-        s = s.replace("\'","");
-        s = s.replace("’","");
-        s = s.replace("`","");
+        s = s.replace("."," ");
+        s = s.replace(","," ");
+        s = s.replace(":"," ");
+        s = s.replace(";"," ");
+        s = s.replace("?"," ");
+        s = s.replace("!"," ");
+        s = s.replace("\""," ");
+        s = s.replace("\'"," ");
+        s = s.replace("’"," ");
+        s = s.replace("`"," ");
         s = s.replace("-","");
+        s = s.replace("&"," ");
+        s = s.replace("("," ");
+        s = s.replace(")"," ");
         return s;
     }
 
     /**
      * Creates a map of all the words found in the text of the page and their occurrences.
-     * First the text is acquired, and then various punctuation are removed, and a special rule for definite definite articles.
+     * First the text is acquired, and then various punctuation are removed.
      * Then, if the current word being looked at after splitting the page text by " " is in the map, increment the count. Otherwise,
      * add the new word with a count of 1.
      * @param doc - the document to analyze
@@ -170,7 +173,6 @@ public class Main {
         String page = doc.text();
 
         page = removePunctuation(page);
-        page = page.replace("the ","the_");
 
         String[] allwords = page.split(" ");
         for (String s : allwords){
@@ -196,7 +198,7 @@ public class Main {
     private static  Boolean isBadWord(String s){
         String[] stopWords = {"couldn","shouldn","wouldn","a", "about", "above", "across", "after", "afterwards", "again", "against", "all", "almost", "alone", "along", "already", "also","although","always","am","among", "amongst", "amoungst", "amount",  "an", "and", "another", "any","anyhow","anyone","anything","anyway", "anywhere", "are", "around", "as",  "at", "back","be","became", "because","become","becomes", "becoming", "been", "before", "beforehand", "behind", "being", "below", "beside", "besides", "between", "beyond", "bill", "both", "bottom","but", "by", "call", "can", "cannot", "cant", "co", "con", "could", "couldnt", "cry", "de", "describe", "detail", "do", "done", "down", "due", "during", "each", "eg", "eight", "either", "eleven","else", "elsewhere", "empty", "enough", "etc", "even", "ever", "every", "everyone", "everything", "everywhere", "except", "few", "fifteen", "fify", "fill", "find", "fire", "first", "five", "for", "former", "formerly", "forty", "found", "four", "from", "front", "full", "further", "get", "give", "go", "had", "has", "hasnt", "have", "he", "hence", "her", "here", "hereafter", "hereby", "herein", "hereupon", "hers", "herself", "him", "himself", "his", "how", "however", "hundred", "ie", "if", "in", "inc", "indeed", "interest", "into", "is", "it", "its", "itself", "keep", "last", "latter", "latterly", "least", "less", "ltd", "made", "many", "may", "me", "meanwhile", "might", "mill", "mine", "more", "moreover", "most", "mostly", "move", "much", "must", "my", "myself", "name", "namely", "neither", "never", "nevertheless", "next", "nine", "no", "nobody", "none", "noone", "nor", "not", "nothing", "now", "nowhere", "of", "off", "often", "on", "once", "one", "only", "onto", "or", "other", "others", "otherwise", "our", "ours", "ourselves", "out", "over", "own","part", "per", "perhaps", "please", "put", "rather", "re", "same", "see", "seem", "seemed", "seeming", "seems", "serious", "several", "she", "should", "show", "side", "since", "sincere", "six", "sixty", "so", "some", "somehow", "someone", "something", "sometime", "sometimes", "somewhere", "still", "such", "system", "take", "ten", "than", "that", "the", "their", "them", "themselves", "then", "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon", "these", "they", "thickv", "thin", "third", "this", "those", "though", "three", "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward", "towards", "twelve", "twenty", "two", "un", "under", "until", "up", "upon", "us", "very", "via", "was", "we", "well", "were", "what", "whatever", "when", "whence", "whenever", "where", "whereafter", "whereas", "whereby", "wherein", "whereupon", "wherever", "whether", "which", "while", "whither", "who", "whoever", "whole", "whom", "whose", "why", "will", "with", "within", "without", "would", "yet", "you", "your", "yours", "yourself", "yourselves", "the"};
         for (String str : stopWords){
-            if (str.equals(s)) {
+            if (str.equals(s.toLowerCase())) {
                 return true;
             }
         }
