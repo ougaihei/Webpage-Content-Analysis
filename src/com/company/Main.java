@@ -39,7 +39,7 @@ public class Main {
             }
         }
         catch(Exception e){
-	        System.out.println("Input either not supplied or not a string, try again:"+e.toString());
+	        System.out.println("Input either not supplied or not a string, try again:");
 	        url = askInput();
         }
 
